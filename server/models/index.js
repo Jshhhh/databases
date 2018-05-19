@@ -3,10 +3,11 @@ var db = require('../db');
 module.exports = {
   messages: {
     get: function (req, res) {
-
-  }, // a function which produces all the messages
+      db.messageGet(req, res);
+    }, // a function which produces all the messages
     post: function (req, res) {
-      db.messagePost(req.body.username, req.body.message, req.body.roomname);
+      console.log(req.body);
+      db.messagePost(req.body.username, req.body.text, req.body.roomname);
 
     } // a function which can be used to insert a message into the database
   },
