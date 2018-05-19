@@ -1,6 +1,6 @@
   
 let app = {
-  server: null,
+  server: 'http://127.0.0.1:3000/classes/messages',
   data : null,
   currentName: window.location.search.split('=')[1],
   friends: [],
@@ -56,15 +56,16 @@ app.send = function(message) {
 
 app.fetch = function() {
   $.ajax({
-      url: app.server + '?order=-createdAt',
+      url: app.server,
       type: 'GET',
       contentType: 'application/json',
       success: function (data) {
         // console.log('success', data);
-      app.data = data;
+      app.data = JSON.parse(data);
 
       },
       error: function (error) {
+        console.log(app.server);
         console.error('fail', error);
       }
   });

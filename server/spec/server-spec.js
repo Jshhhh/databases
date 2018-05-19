@@ -54,7 +54,6 @@ describe('Persistent Node Chat Server', function() {
         var queryArgs = [];
         dbConnection.query(queryString, queryArgs, function(err, results) {
           // Should have one result:
-          console.log(results);
           expect(results.length).to.equal(1);
 
           // TODO: If you don't have a column named text, change this test.
@@ -88,4 +87,49 @@ describe('Persistent Node Chat Server', function() {
       // });
     });
   });
+  
+  it('Should not have duplicate users', function(done) {
+
+    db.messagePost('Valjean', 'I am Jean Valjean!', 'main');
+    db.messagePost('Valjean', 'I am also Jean Valjean!', 'main');
+    var queryString = "select count(name) from users where name = 'Valjean'";
+    var queryArgs = [];
+    dbConnection.query(queryString, queryArgs, function(err, results) {
+      // Should have one result;
+      // TODO: If you don't have a column named text, change this test.
+      expect(results[0]['count(name)']).to.equal(1);
+
+      done();
+    });
+  });
+
+  it('Should not have duplicate rooms', function(done) {
+
+    db.messagePost('Valjean', 'I am Jean Valjean!', 'main');
+    db.messagePost('Valjean', 'I am also Jean Valjean!', 'main');
+    var queryString = "select count(name) from rooms where name = 'main'";
+    var queryArgs = [];
+    dbConnection.query(queryString, queryArgs, function(err, results) {
+      // Should have one result;
+      // TODO: If you don't have a column named text, change this test.
+      expect(results[0]['count(name)']).to.equal(1);
+      done();
+    });
+  });
+
+
+
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
