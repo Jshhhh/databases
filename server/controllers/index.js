@@ -9,16 +9,16 @@ module.exports = {
       // console.log('GETTING POSTTTTT', req.body);
       models.messages.post(req, res);
       res.send('CONTROL POST RECIEVED');
-      // res.end();
+      res.end();
     }
   },
   users: {
     // Ditto as above
     get: function (req, res) {
-
+      res.end();
     },
     post: function (req, res) {
-      
+      res.end();
     }
   }
 };

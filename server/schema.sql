@@ -13,7 +13,8 @@ CREATE TABLE users (
 CREATE TABLE rooms (
   ID int not null auto_increment,
   primary key (ID),
-  name VARCHAR(30)
+  name VARCHAR(30),
+  UNIQUE(name)
 );
 
 CREATE TABLE messages (

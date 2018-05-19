@@ -9,7 +9,8 @@ var connection = mysql.createConnection({
   host: "localhost",
   user: "student",
   password: "student",
-  database: "chat"
+  database: "chat",
+  multipleStatements: true
 })
 
 connection.connect(function(err) {
@@ -33,27 +34,20 @@ exports.messageGet = function (query){
 }
 
 exports.messagePost = function (user, message, room){
-  //check database for user name
-   //if no user name
-    //add user name
 
-  connection.query(`INSERT into users (name) VALUES ('Daryl')`, 
+  console.log(user, message, room);
+  var query = `INSERT IGNORE INTO users (name) VALUES (${JSON.stringify(user)});
+              INSERT IGNORE INTO rooms (name) VALUES (${JSON.stringify(room)});
+              INSERT into messages (userId, messages, roomId) VALUES ((SELECT id from users where name = ${JSON.stringify(user)}),
+              ${JSON.stringify(message)},(SELECT id from rooms where name = ${JSON.stringify(room)}));
+              `
+  connection.query(query, 
     function(err, rows, fields) {
       if(err) {
         console.log(err);
       } else {
         console.log('message POSTED');
       }
-  });
-
-
-
-  connection.query(`select id from users where name = 'Daryl'`, function (error, rowrs, fieldrs){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log(rowrs[0].id);
-    }
   });
 
 

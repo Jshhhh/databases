@@ -6,8 +6,8 @@ module.exports = {
 
   }, // a function which produces all the messages
     post: function (req, res) {
-      // console.log('MODELS RECIEVED', req.body)
-      db.messagePost();
+      db.messagePost(req.body.username, req.body.message, req.body.roomname);
+
     } // a function which can be used to insert a message into the database
   },
 
